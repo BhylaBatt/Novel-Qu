@@ -534,18 +534,20 @@ async function loadChapters(novelId){
   try{
 
     chapters = await supabaseFetch(
-      "chapter",
-      "select=*&novel_id=eq."+encodeURIComponent(novelId)+"&order=id.asc"
+      "chapters",
+      "select=*&novel_id=eq."+encodeURIComponent(novelId)+"&order=chapter_number.asc"
     );
 
     return chapters;
 
   }catch(error){
 
-    console.error(error);
+    console.error("Gagal mengambil chapters:",error);
 
     return [];
+
   }
+
 }
 
 
@@ -854,67 +856,152 @@ function renderBookmarks(){
 ========================================================= */
 
 async function detail(id){
-  const n = novels.find(x => x.id === id);
-  if(!n) return;
 
-  detailBox.innerHTML = `
+  const n =
+    novels.find(x=>Number(x.id)===Number(id));
+
+  if(!n)return;
+
+  document.getElementById("detailBox").innerHTML = `
+
     <div class="back">
-      <button class="btn" onclick="go('catalog')">← Kembali</button>
+
+      <button
+        class="btn"
+        onclick="go('catalog')"
+      >
+        ← Kembali
+      </button>
+
     </div>
 
     <div class="detail">
-      <div class="cover">▯</div>
-      <h1>${esc(n.title)}</h1>
+
+      ${coverHTML(n)}
+
+      <h1>
+        ${esc(n.title || "Tanpa judul")}
+      </h1>
+
       <div class="meta">
-        ${esc(n.genre)} · ⭐ ${n.rating || 0} · ${n.chapters || 0} bab
+
+        ${esc(n.genre || "Umum")}
+        · ⭐ ${n.rating ?? "0"}
+        · 👁 ${Number(n.views || 0).toLocaleString("id-ID")}
+
       </div>
 
-      <p>${esc(n.desc || "")}</p>
+      <p>
+        ${esc(
+          n.description ||
+          n.desc ||
+          "Belum ada deskripsi novel."
+        )}
+      </p>
 
       <div class="sectionhead">
+
         <h2>Daftar Bab</h2>
+
+        <span
+          id="chapterCount"
+          class="meta"
+        >
+          Memuat...
+        </span>
+
       </div>
 
       <div id="chapterList">
-        <div class="empty">Memuat bab...</div>
+
+        <div class="empty">
+          Memuat daftar bab...
+        </div>
+
       </div>
+
     </div>
   `;
 
   go("detail");
 
-  try {
-    const chapters = await supabaseFetch(
-      `chapters?select=id,chapter_number,title,content,views&novel_id=eq.${id}&order=chapter_number.asc`
-    );
+  try{
 
-    const list = document.getElementById("chapterList");
+    const list =
+      await loadChapters(id);
 
-    if(!chapters || chapters.length === 0){
-      list.innerHTML = `
+    const chapterList =
+      document.getElementById("chapterList");
+
+    const chapterCount =
+      document.getElementById("chapterCount");
+
+    if(!list || list.length===0){
+
+      chapterCount.textContent =
+        "0 bab";
+
+      chapterList.innerHTML = `
         <div class="empty">
           Belum ada bab untuk novel ini.
         </div>
       `;
+
       return;
     }
 
-    list.innerHTML = chapters.map(ch => `
-      <div class="chapter" onclick="readChapter(${ch.id}, ${id})">
-        <span>
-          ${esc(ch.title || "Bab " + ch.chapter_number)}
-        </span>
-        <span>›</span>
-      </div>
-    `).join("");
+    chapterCount.textContent =
+      list.length+" bab";
 
-  } catch(error) {
+    chapterList.innerHTML =
+      list.map(ch=>`
+
+        <div
+          class="chapter"
+          onclick="readChapter(
+            ${Number(id)},
+            ${Number(ch.id)}
+          )"
+        >
+
+          <span>
+
+            ${esc(
+              ch.title ||
+              "Bab "+ch.chapter_number
+            )}
+
+          </span>
+
+          <span>
+            ›
+          </span>
+
+        </div>
+
+      `).join("");
+
+  }catch(error){
+
+    console.error(error);
+
     document.getElementById("chapterList").innerHTML = `
+
       <div class="empty">
-        Gagal mengambil chapter.<br>
+
+        <b>Gagal mengambil daftar bab.</b>
+
+        <br><br>
+
         ${esc(error.message)}
+
       </div>
+
     `;
+
+  }
+
+      }
   }
 }
 /* =========================================================
