@@ -854,146 +854,69 @@ function renderBookmarks(){
 ========================================================= */
 
 async function detail(id){
+  const n = novels.find(x => x.id === id);
+  if(!n) return;
 
-  const n =
-    novels.find(x=>Number(x.id)===Number(id));
-
-  if(!n)return;
-
-  selectedNovel=n;
-
-  document.getElementById("detailBox").innerHTML = `
-
+  detailBox.innerHTML = `
     <div class="back">
-
-      <button
-        class="btn"
-        onclick="go('catalog')"
-      >
-        ← Kembali
-      </button>
-
+      <button class="btn" onclick="go('catalog')">← Kembali</button>
     </div>
 
     <div class="detail">
-
-      ${coverHTML(n)}
-
-      <h1>
-        ${esc(n.title)}
-      </h1>
-
+      <div class="cover">▯</div>
+      <h1>${esc(n.title)}</h1>
       <div class="meta">
-
-        Genre:
-        ${esc(n.genre || "Umum")}
-
+        ${esc(n.genre)} · ⭐ ${n.rating || 0} · ${n.chapters || 0} bab
       </div>
 
-      <div class="meta">
-
-        ⭐ ${n.rating ?? "0"}
-
-        ·
-
-        👁 ${Number(n.views||0).toLocaleString("id-ID")}
-
-      </div>
-
-      <div class="meta">
-
-        Status:
-        ${esc(n.status || "Tidak diketahui")}
-
-      </div>
-
-      <p class="desc">
-
-        ${esc(
-          n.description ||
-          n.desc ||
-          "Belum ada deskripsi novel."
-        )}
-
-      </p>
-
-      <button
-        class="btn"
-        onclick="toggleMark(${Number(n.id)})"
-      >
-        ${
-          getBookmarks().includes(Number(n.id))
-          ? "★ Hapus Bookmark"
-          : "☆ Bookmark"
-        }
-      </button>
+      <p>${esc(n.desc || "")}</p>
 
       <div class="sectionhead">
-
         <h2>Daftar Bab</h2>
-
-        <span id="chapterCount">
-          Memuat...
-        </span>
-
       </div>
 
       <div id="chapterList">
-
-        <div class="loading">
-          Memuat bab...
-        </div>
-
+        <div class="empty">Memuat bab...</div>
       </div>
-
     </div>
   `;
 
   go("detail");
 
-  const list =
-    await loadChapters(n.id);
+  try {
+    const chapters = await supabaseFetch(
+      `chapters?select=id,chapter_number,title,content,views&novel_id=eq.${id}&order=chapter_number.asc`
+    );
 
-  document.getElementById("chapterCount").textContent =
-    list.length+" bab";
+    const list = document.getElementById("chapterList");
 
-  if(!list.length){
+    if(!chapters || chapters.length === 0){
+      list.innerHTML = `
+        <div class="empty">
+          Belum ada bab untuk novel ini.
+        </div>
+      `;
+      return;
+    }
 
-    document.getElementById("chapterList").innerHTML =
-      `<div class="empty">
-       Belum ada bab untuk novel ini.
-       </div>`;
-
-    return;
-  }
-
-  document.getElementById("chapterList").innerHTML =
-    list.map((ch,index)=>`
-
-      <div
-        class="chapter"
-        onclick="readChapter(${Number(n.id)},${Number(ch.id)})"
-      >
-
+    list.innerHTML = chapters.map(ch => `
+      <div class="chapter" onclick="readChapter(${ch.id}, ${id})">
         <span>
-
-          ${esc(
-            ch.title ||
-            ch.chapter_title ||
-            "Bab "+(index+1)
-          )}
-
+          ${esc(ch.title || "Bab " + ch.chapter_number)}
         </span>
-
         <span>›</span>
-
       </div>
-
     `).join("");
 
+  } catch(error) {
+    document.getElementById("chapterList").innerHTML = `
+      <div class="empty">
+        Gagal mengambil chapter.<br>
+        ${esc(error.message)}
+      </div>
+    `;
+  }
 }
-
-
 /* =========================================================
    BOOKMARK TOGGLE
 ========================================================= */
