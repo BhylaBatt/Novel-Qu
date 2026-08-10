@@ -332,8 +332,7 @@
   <script>
     // KONFIGURASI SUPABASE
     const SUPABASE_URL = "https://mcqaljrpbvwjzvzhkigk.supabase.co";
-    const SUPABASE_KEY = "ISI_API_KEY_DI_SINI"; // Masukkan API Key di sini
-
+    const SUPABASE_KEY = "sb_publishable_Y3sTZvucMvEXdV9GdwQtGw_CI0t0b2u"; // sb_publishable_Y3sTZvucMvEXdV9GdwQtGw_CI0t0b2u
     // STATE LOKAL
     let novels = [];
     let bookmarks = JSON.parse(localStorage.getItem("nq_bookmarks") || "[]");
