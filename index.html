@@ -520,20 +520,20 @@ async function loadChapters(novelId) {
 
   try {
 
-    chapters = await supabaseFetch(
+    const result = await supabaseFetch(
       "chapters",
-      "select=*&novel_id=eq." +
+      "select=id,chapter_number,title,content,views,novel_id&novel_id=eq." +
       encodeURIComponent(novelId) +
       "&order=chapter_number.asc"
     );
 
-    console.log("Chapter berhasil dimuat:", chapters);
+    console.log("CHAPTER:", result);
 
-    return chapters;
+    return result;
 
   } catch (error) {
 
-    console.error("Gagal mengambil chapters:", error);
+    console.error("CHAPTER ERROR:", error);
 
     throw error;
   }
@@ -1364,20 +1364,22 @@ async function loadChapters(novelId) {
 
   try {
 
-    chapters = await supabaseFetch(
+    console.log("ID NOVEL YANG DICARI:", novelId);
+
+    const result = await supabaseFetch(
       "chapters",
-      "select=*&novel_id=eq." +
+      "select=id,chapter_number,novel_id,title,content,views&novel_id=eq." +
       encodeURIComponent(novelId) +
       "&order=chapter_number.asc"
     );
 
-    console.log("Chapter berhasil dimuat:", chapters);
+    console.log("HASIL CHAPTER:", result);
 
-    return chapters;
+    return result;
 
   } catch (error) {
 
-    console.error("Gagal mengambil chapters:", error);
+    console.error("ERROR CHAPTER:", error);
 
     throw error;
   }
