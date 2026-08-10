@@ -1361,30 +1361,19 @@ async function loadNovels() {
 ========================================================= */
 
 async function loadChapters(novelId) {
+async function loadChapters(novelId) {
 
-  try {
+  chapters = await supabaseFetch(
+    "chapters",
+    "select=*&novel_id=eq." +
+    encodeURIComponent(novelId) +
+    "&order=chapter_number.asc"
+  );
 
-    console.log("ID NOVEL YANG DICARI:", novelId);
+  console.log("CHAPTERS:", chapters);
 
-    const result = await supabaseFetch(
-      "chapters",
-      "select=id,chapter_number,novel_id,title,content,views&novel_id=eq." +
-      encodeURIComponent(novelId) +
-      "&order=chapter_number.asc"
-    );
-
-    console.log("HASIL CHAPTER:", result);
-
-    return result;
-
-  } catch (error) {
-
-    console.error("ERROR CHAPTER:", error);
-
-    throw error;
-  }
+  return chapters;
 }
-
 
 /* =========================================================
    ESCAPE HTML
