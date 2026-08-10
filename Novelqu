@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novel Qu - Baca Novel Online</title>
+  <style>
+    :root {
+      --bg-color: #f4f6f8;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --text: #1f2937;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    header {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: var(--primary);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .btn:hover {
+      background: var(--border);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .view-section {
+      display: none;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    /* Controls & Filter */
+    .controls {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .search-input, .genre-select {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    .search-input {
+      flex: 1;
+    }
+
+    /* Novel Grid */
+    .novel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
+    }
+
+    .novel-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    .novel-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .novel-cover {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      background: #e2e8f0;
+    }
+
+    .novel-info {
+      padding: 8px 10px;
+    }
+
+    .novel-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .novel-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Detail View */
+    .detail-card {
+      background: var(--card-bg);
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .detail-cover {
+      width: 110px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .detail-content {
+      flex: 1;
+    }
+
+    .detail-title {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
+
+    .detail-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .action-row {
+      margin-top: 12px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    /* Chapter List */
+    .chapter-list-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      padding: 16px;
+    }
+
+    .chapter-list-header {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    .chapter-item {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .chapter-item:last-child {
+      border-bottom: none;
+    }
+
+    .chapter-item:hover {
+      background: var(--bg-color);
+    }
+
+    /* Reader View */
+    .readerbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+      border-radius: 8px;
+    }
+
+    .reader {
+      background: var(--card-bg);
+      padding: 24px 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 18px;
+    }
+
+    .reader h1 {
+      font-size: 1.4rem;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .reader h2 {
+      font-size: 1.2rem;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .reader p {
+      margin-bottom: 16px;
+      text-align: justify;
+    }
+
+    .empty, .error, .loading {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <div class="logo" onclick="go('home')">Novel Qu</div>
+      <div class="nav-buttons">
+        <button class="btn" onclick="go('home')">Beranda</button>
+        <button class="btn" onclick="go('bookmarks')">Bookmark</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- BERANDA & DAFTAR NOVEL -->
+    <section id="homeView" class="view-section active">
+      <div class="controls">
+        <input type="text" id="searchInput" class="search-input" placeholder="Cari novel..." oninput="handleFilter()">
+        <select id="genreSelect" class="genre-select" onchange="handleFilter()">
+          <option value="">Semua Genre</option>
+        </select>
+      </div>
+      <div id="novelGrid" class="novel-grid">
+        <div class="loading">Memuat novel...</div>
+      </div>
+    </section>
+
+    <!-- BOOKMARKS -->
+    <section id="bookmarksView" class="view-section">
+      <h2 style="margin-bottom: 16px;">Bookmark Saya</h2>
+      <div id="bookmarkGrid" class="novel-grid">
+        <div class="empty">Belum ada bookmark disimpan.</div>
+      </div>
+    </section>
+
+    <!-- DETAIL NOVEL -->
+    <section id="detailView" class="view-section">
+      <button class="btn" onclick="go('home')" style="margin-bottom: 12px;">← Kembali</button>
+      <div id="detailBox"></div>
+      <div class="chapter-list-card">
+        <div class="chapter-list-header">Daftar Bab</div>
+        <div id="chapterListBox">
+          <div class="loading">Memuat daftar bab...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PEMBACA CHAPTER -->
+    <section id="readerView" class="view-section">
+      <div id="readerBox"></div>
+    </section>
+
+  </main>
+
+  <script>
+    // KONFIGURASI SUPABASE
+    const SUPABASE_URL = "https://mcqaljrpbvwjzvzhkigk.supabase.co";
+    const SUPABASE_KEY = "ISI_API_KEY_DI_SINI"; // Masukkan API Key di sini
+
+    // STATE LOKAL
+    let novels = [];
+    let bookmarks = JSON.parse(localStorage.getItem("nq_bookmarks") || "[]");
+    let currentFontSize = 18;
+
+    // FUNGSI UTAMA FETCH SUPABASE
+    async function supabaseFetch(table, params = "") {
+      const url = SUPABASE_URL + "/rest/v1/" + table + "?" + params;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + SUPABASE_KEY,
+          "Content-Type": "application/json"
+        }
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error("Supabase error " + response.status + ": " + errorText);
+      }
+
+      return await response.json();
+    }
+
+    // UTILS
+    function esc(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function formatChapter(text) {
+      return String(text)
+        .split(/\n\s*\n/)
+        .map(p => {
+          if (!p.trim()) return "";
+          return `<p>${esc(p).replace(/\n/g, "<br>")}</p>`;
+        })
+        .join("");
+    }
+
+    // NAVIGASI VIEW
+    function go(viewName) {
+      document.querySelectorAll(".view-section").forEach(el => el.classList.remove("active"));
+      if (viewName === "home") {
+        document.getElementById("homeView").classList.add("active");
+      } else if (viewName === "bookmarks") {
+        renderBookmarks();
+        document.getElementById("bookmarksView").classList.add("active");
+      } else if (viewName === "detail") {
+        document.getElementById("detailView").classList.add("active");
+      } else if (viewName === "reader") {
+        document.getElementById("readerView").classList.add("active");
+      }
+    }
+
+    // LOAD NOVELS
+    async function loadNovels() {
+      try {
+        novels = await supabaseFetch("novels", "select=*");
+        populateGenres();
+        renderNovels(novels);
+      } catch (err) {
+        document.getElementById("novelGrid").innerHTML = `
+          <div class="error">Gagal memuat novel. Pastikan API Key diisi dengan benar.</div>
+        `;
+        console.error(err);
+      }
+    }
+
+    function populateGenres() {
+      const genres = new Set();
+      novels.forEach(n => {
+        if (n.genre) genres.add(n.genre);
+      });
+      const select = document.getElementById("genreSelect");
+      select.innerHTML = `<option value="">Semua Genre</option>`;
+      genres.forEach(g => {
+        select.innerHTML += `<option value="${esc(g)}">${esc(g)}</option>`;
+      });
+    }
+
+    function handleFilter() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      const genre = document.getElementById("genreSelect").value;
+
+      const filtered = novels.filter(n => {
+        const matchTitle = (n.title || "").toLowerCase().includes(query);
+        const matchGenre = genre ? n.genre === genre : true;
+        return matchTitle && matchGenre;
+      });
+
+      renderNovels(filtered);
+    }
+
+    function renderNovels(list) {
+      const container = document.getElementById("novelGrid");
+      if (!list.length) {
+        container.innerHTML = `<div class="empty">Tidak ada novel ditemukan.</div>`;
+        return;
+      }
+
+      container.innerHTML = list.map(n => `
+        <div class="novel-card" onclick="detail(${n.id})">
+          <img class="novel-cover" src="${esc(n.cover_url || 'https://via.placeholder.com/150x200?text=No+Cover')}" alt="${esc(n.title)}">
+          <div class="novel-info">
+            <div class="novel-title">${esc(n.title)}</div>
+            <div class="novel-meta">
+              <span>⭐ ${n.rating || '0'}</span>
+              <span>👁️ ${n.views || '0'}</span>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    // LOAD CHAPTERS (Menggunakan 'chapters')
+    async function loadChapters(novelId) {
+      try {
+        const chapters = await supabaseFetch(
+          "chapters",
+          "select=*&novel_id=eq." + encodeURIComponent(Number(novelId)) + "&order=chapter_number.asc"
+        );
+        console.log("CHAPTERS:", chapters);
+        return chapters;
+      } catch (error) {
+        console.error("Gagal mengambil chapters:", error);
+        throw error;
+      }
+    }
+
+    // DETAIL NOVEL
+    async function detail(novelId) {
+      const n = novels.find(x => Number(x.id) === Number(novelId));
+      if (!n) return;
+
+      const isBookmarked = bookmarks.includes(Number(novelId));
+
+      document.getElementById("detailBox").innerHTML = `
+        <div class="detail-card">
+          <img class="detail-cover" src="${esc(n.cover_url || 'https://via.placeholder.com/150x200?text=No+Cover')}" alt="${esc(n.title)}">
+          <div class="detail-content">
+            <h1 class="detail-title">${esc(n.title)}</h1>
+            <div class="novel-meta" style="justify-content: flex-start; gap: 16px;">
+              <span>Genre: <b>${esc(n.genre || '-')}</b></span>
+              <span>⭐ <b>${n.rating || '0'}</b></span>
+              <span>👁️ <b>${n.views || '0'}</b></span>
+            </div>
+            <div class="detail-desc">${esc(n.description || 'Tidak ada deskripsi.')}</div>
+            <div class="action-row">
+              <button class="btn ${isBookmarked ? '' : 'btn-primary'}" onclick="toggleBookmark(${n.id})">
+                ${isBookmarked ? 'Hapus Bookmark' : '+ Simpan Bookmark'}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("chapterListBox").innerHTML = `<div class="loading">Memuat bab...</div>`;
+      go("detail");
+
+      try {
+        const chapterList = await loadChapters(novelId);
+
+        if (!chapterList || chapterList.length === 0) {
+          document.getElementById("chapterListBox").innerHTML = `<div class="empty">Daftar Bab = 0 bab</div>`;
+          return;
+        }
+
+        document.getElementById("chapterListBox").innerHTML = chapterList.map(ch => `
+          <div class="chapter-item" onclick="readChapter(${Number(novelId)}, ${Number(ch.id)})">
+            <span>${esc(ch.title || 'Bab ' + ch.chapter_number)}</span>
+            <span>&gt;</span>
+          </div>
+        `).join("");
+
+      } catch (err) {
+        document.getElementById("chapterListBox").innerHTML = `
+          <div class="error">Gagal memuat daftar bab.</div>
+        `;
+      }
+    }
+
+    // BACA CHAPTER (Menggunakan 'chapters')
+    async function readChapter(novelId, chapterId) {
+      const n = novels.find(x => Number(x.id) === Number(novelId));
+      if (!n) return;
+
+      const readerBox = document.getElementById("readerBox");
+
+      readerBox.innerHTML = `
+        <div class="readerbar">
+          <button class="btn" onclick="detail(${Number(novelId)})">← Daftar Bab</button>
+          <span>Memuat...</span>
+          <div>
+            <button class="btn" onclick="font(-1)">A−</button>
+            <button class="btn" onclick="font(1)">A+</button>
+          </div>
+        </div>
+
+        <article class="reader" id="article" style="font-size: ${currentFontSize}px;">
+          <h1>${esc(n.title)}</h1>
+          <div class="loading">Memuat isi bab...</div>
+        </article>
+      `;
+
+      go("reader");
+
+      try {
+        const result = await supabaseFetch(
+          "chapters",
+          "select=*&id=eq." + encodeURIComponent(Number(chapterId))
+        );
+
+        if (!result.length) {
+          document.getElementById("article").innerHTML = `<div class="empty">Bab tidak ditemukan.</div>`;
+          return;
+        }
+
+        const ch = result[0];
+        const title = ch.title || ("Bab " + ch.chapter_number);
+        const content = ch.content || "";
+
+        document.querySelector("#readerBox .readerbar span").textContent = title;
+
+        document.getElementById("article").innerHTML = `
+          <h1>${esc(n.title)}</h1>
+          <h2>${esc(title)}</h2>
+          ${content ? formatChapter(content) : `<p>Isi bab belum tersedia.</p>`}
+        `;
+
+      } catch (error) {
+        document.getElementById("article").innerHTML = `
+          <div class="error">
+            <b>Gagal mengambil isi bab.</b><br><br>
+            ${esc(error.message)}
+          </div>
+        `;
+      }
+    }
+
+    // BUKURAN FONT READER
+    function font(delta) {
+      currentFontSize = Math.min(Math.max(12, currentFontSize + (delta * 2)), 32);
+      const article = document.getElementById("article");
+      if (article) {
+        article.style.fontSize = currentFontSize + "px";
+      }
+    }
+
+    // BOOKMARKS LOGIC
+    function toggleBookmark(novelId) {
+      const id = Number(novelId);
+      const index = bookmarks.indexOf(id);
+      if (index > -1) {
+        bookmarks.splice(index, 1);
+      } else {
+        bookmarks.push(id);
+      }
+      localStorage.setItem("nq_bookmarks", JSON.stringify(bookmarks));
+      detail(id);
+    }
+
+    function renderBookmarks() {
+      const container = document.getElementById("bookmarkGrid");
+      const bookmarkedNovels = novels.filter(n => bookmarks.includes(Number(n.id)));
+
+      if (!bookmarkedNovels.length) {
+        container.innerHTML = `<div class="empty">Belum ada novel yang di-bookmark.</div>`;
+        return;
+      }
+
+      container.innerHTML = bookmarkedNovels.map(n => `
+        <div class="novel-card" onclick="detail(${n.id})">
+          <img class="novel-cover" src="${esc(n.cover_url || 'https://via.placeholder.com/150x200?text=No+Cover')}" alt="${esc(n.title)}">
+          <div class="novel-info">
+            <div class="novel-title">${esc(n.title)}</div>
+            <div class="novel-meta">
+              <span>⭐ ${n.rating || '0'}</span>
+              <span>👁️ ${n.views || '0'}</span>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    // INISIALISASI
+    window.addEventListener("DOMContentLoaded", () => {
+      loadNovels();
+    });
+  </script>
+</body>
+</html>
+
