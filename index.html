@@ -483,47 +483,25 @@ async function loadNovels(){
 
   try{
 
-    /*
-      Mengambil semua kolom dari tabel novel.
-      Kolom yang kita gunakan:
-      id
-      created_at
-      title
-      slug
-      cover_url
-      genre
-      status
-      rating
-      views
-    */
+    async function loadChapters(novelId){
 
-    novels = await supabaseFetch(
-      "novels",
-      "select=*&order=created_at.desc"
+  try{
+
+    chapters = await supabaseFetch(
+      "chapters",
+      "select=*&novel_id=eq."+encodeURIComponent(novelId)+"&order=chapter_number.asc"
     );
 
-    renderHome();
-    renderCatalog();
-    renderGenres();
+    return chapters;
 
   }catch(error){
 
     console.error(error);
+    return [];
 
-    document.getElementById("homeList").innerHTML =
-      `<div class="error">
-      <b>Gagal mengambil data novel.</b><br><br>
-      ${esc(error.message)}
-      </div>`;
-
-    document.getElementById("catalogList").innerHTML =
-      `<div class="error">
-      <b>Gagal mengambil data dari Supabase.</b><br><br>
-      ${esc(error.message)}
-      </div>`;
   }
-}
 
+    }
 
 /* =========================================================
    LOAD CHAPTER
