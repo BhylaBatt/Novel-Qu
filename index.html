@@ -498,7 +498,7 @@ async function loadNovels(){
     */
 
     novels = await supabaseFetch(
-      "novel",
+      "novels",
       "select=*&order=created_at.desc"
     );
 
