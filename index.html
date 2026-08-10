@@ -3,70 +3,106 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Novel Qu - baca novel online gratis.">
-<title>Novel Qu — Baca Novel Gratis</title>
+<meta name="description" content="Novel Qu - Baca novel online gratis">
+<title>Novel Qu - Baca Novel Gratis</title>
 <style>
-:root{--bg:#f7f8fa;--card:#fff;--text:#172333;--muted:#737c86;--line:#e5e8ec;--soft:#eef1f4;--dark:#172333}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
-button,input{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}.wrap{max-width:1120px;margin:auto;padding:0 18px}
-header{height:72px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}.head{height:100%;display:flex;align-items:center;gap:28px}
-.logo{font-size:21px;font-weight:900}.logo small{display:block;font-size:10px;color:var(--muted);font-weight:500;margin-top:2px}.nav{display:flex;gap:22px;flex:1}.nav a{font-size:14px;color:var(--muted)}.nav a:hover{color:var(--text)}
-.search{width:260px;position:relative}.search input{width:100%;border:1px solid var(--line);background:var(--soft);padding:10px 12px 10px 35px;border-radius:11px;outline:none}.search span{position:absolute;left:12px;top:7px;font-size:20px;color:var(--muted)}
-.hero{margin:28px 0;background:linear-gradient(120deg,#eef1f4,#fbfbfc);border-radius:22px;padding:44px;min-height:320px;position:relative;overflow:hidden}.hero h1{font-size:42px;line-height:1.1;margin:0 0 15px;max-width:580px}.hero p{color:var(--muted);line-height:1.7;max-width:510px}.btn{border:0;background:var(--dark);color:#fff;border-radius:11px;padding:12px 17px;font-weight:750}.btn.light{background:var(--soft);color:var(--text)}
-.art{position:absolute;right:35px;bottom:-15px;width:330px;height:260px}.orb{position:absolute;right:5px;bottom:-60px;width:250px;height:250px;border-radius:50%;background:#e1e5e9}.book{position:absolute;right:63px;bottom:55px;width:170px;height:125px;background:#fff;border:2px solid #293441;border-radius:5px;box-shadow:8px 7px 0 -2px #fff,8px 7px 0 #293441}.book:after{content:"";position:absolute;left:50%;height:100%;border-left:1px solid #293441}
-.section{margin:34px 0}.sectionhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.sectionhead h2{font-size:21px;margin:0}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;transition:.18s}.card:hover{transform:translateY(-2px);box-shadow:0 8px 25px #18233312}.cover{height:190px;background:linear-gradient(145deg,#edf0f3,#fafafa);display:grid;place-items:center;color:#9aa3ad}.cover svg{width:58px}.body{padding:13px}.title{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{font-size:11px;color:var(--muted);margin-top:6px}
-.notice{border:1px solid var(--line);background:#fff;border-radius:13px;padding:16px;color:var(--muted);font-size:13px;line-height:1.6}
-.page{display:none;padding:32px 0 60px}.page.active{display:block}.back{border:0;background:var(--soft);padding:10px 13px;border-radius:10px}.list{background:#fff;border:1px solid var(--line);border-radius:14px}.row{display:flex;gap:13px;padding:13px;border-bottom:1px solid var(--line);cursor:pointer}.row:last-child{border:0}.rowcover{width:65px;height:80px;border-radius:9px;background:var(--soft);display:grid;place-items:center;color:#9aa3ad;flex:none}.rowcover svg{width:34px}.rowinfo{flex:1}.arrow{font-size:25px;color:#89919a}
-.detail{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;margin-top:14px}.detailtop{display:flex;gap:20px}.bigcover{width:185px;height:245px;border-radius:13px;background:var(--soft);display:grid;place-items:center;color:#98a1ab;flex:none}.bigcover svg{width:72px}.detail h1{font-size:31px;margin:0 0 8px}.desc{color:#626d79;line-height:1.75;max-width:720px}.actions{display:flex;gap:8px;margin-top:18px}.chapters{margin-top:24px;border-top:1px solid var(--line)}.chapter{display:flex;justify-content:space-between;padding:14px 3px;border-bottom:1px solid var(--line);cursor:pointer}
-.reader{max-width:780px;margin:auto}.readerhead{display:flex;justify-content:space-between;align-items:center}.reader h1{font-size:24px;margin:0}.bar{height:4px;background:#e7eaed;border-radius:4px;margin:20px 0 30px}.bar i{display:block;height:100%;background:var(--dark);border-radius:4px}.article{background:#fff;border:1px solid var(--line);border-radius:15px;padding:32px;font-family:Georgia,serif;font-size:20px;line-height:2}.article h2{text-align:center;font-size:24px}.article p{margin:0 0 22px}.reader-nav{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}.empty{text-align:center;color:var(--muted);padding:50px}.bottom{display:none}
-@media(max-width:800px){.nav{display:none}.search{margin-left:auto;width:220px}.grid{grid-template-columns:repeat(3,1fr)}.art{opacity:.65;right:-55px}.hero h1{font-size:36px}}
-@media(max-width:600px){.wrap{padding:0 14px}header{height:62px}.search{display:none}.hero{margin:17px 0;padding:30px 22px;min-height:365px}.hero h1{font-size:30px}.art{right:-80px;transform:scale(.8);transform-origin:bottom right}.grid{grid-template-columns:repeat(2,1fr);gap:10px}.cover{height:170px}.detailtop{gap:13px}.bigcover{width:112px;height:150px}.detail h1{font-size:23px}.article{padding:21px;font-size:18px;line-height:1.9}.bottom{display:grid;position:fixed;bottom:0;left:0;right:0;height:64px;background:#fff;border-top:1px solid var(--line);grid-template-columns:repeat(4,1fr);z-index:30}.bottom button{border:0;background:none;color:var(--muted);font-size:10px}.bottom button.active{color:var(--text);font-weight:800}.bottom svg{display:block;width:22px;height:22px;margin:auto}.page{padding-bottom:75px}}
+*{box-sizing:border-box}body{margin:0;background:#f6f8fb;color:#172333;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{background:#fff;border-bottom:1px solid #e5e8ec;position:sticky;top:0;z-index:10}
+.wrap{max-width:900px;margin:auto;padding:0 16px}.top{height:70px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:23px;font-weight:900}.logo small{display:block;font-size:11px;color:#737c86;font-weight:500}
+nav{display:flex;gap:8px;overflow:auto;padding:0 0 10px}.navbtn,.bottom button{border:0;background:none;padding:8px 12px;color:#66717d;font-size:14px}
+.navbtn.active,.bottom button.active{color:#172333;font-weight:800}
+.search{background:#fff;border:1px solid #e5e8ec;border-radius:12px;padding:10px 12px;margin:16px 0}
+.search input{border:0;outline:0;width:100%;font-size:15px}
+.page{display:none;padding:20px 0 90px}.page.active{display:block}
+.hero{background:linear-gradient(120deg,#eef3f8,#fff);border-radius:22px;padding:32px 24px;margin-bottom:24px}
+.hero h1{font-size:34px;margin:0 0 12px}.hero p{color:#68727d;line-height:1.7}
+.btn{display:inline-block;border:0;border-radius:12px;background:#172333;color:white;padding:12px 18px;font-weight:800}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;margin:20px 0 12px}.sectionhead h2{margin:0}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.card{background:#fff;border:1px solid #e5e8ec;border-radius:16px;padding:16px;cursor:pointer}
+.cover{height:130px;border-radius:12px;background:#edf1f5;display:grid;place-items:center;color:#9aa4af;font-size:42px;margin-bottom:12px}
+.card h3{margin:0 0 6px;font-size:17px}.meta,.desc{font-size:13px;color:#737c86}.desc{line-height:1.6}
+.genre{display:inline-block;background:#eef3f8;border-radius:20px;padding:4px 8px;margin:3px;font-size:12px;cursor:pointer}
+.detail{background:#fff;border-radius:18px;padding:20px;border:1px solid #e5e8ec}
+.back{margin-bottom:14px}.chapter{display:flex;justify-content:space-between;gap:10px;padding:13px 4px;border-bottom:1px solid #edf0f3;cursor:pointer}
+.reader{background:#fff;border-radius:16px;padding:22px;line-height:2;font-size:18px;border:1px solid #e5e8ec}
+.readerbar{display:flex;gap:8px;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap}
+.readerbar button{border:1px solid #dfe4e9;background:#fff;border-radius:9px;padding:8px 12px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e5e8ec;display:flex;justify-content:space-around;padding:7px;z-index:20}
+.empty{padding:30px;text-align:center;color:#737c86}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}.bottom{display:none}}
 </style>
 </head>
 <body>
-<header><div class="wrap head">
-<a class="logo" href="#" onclick="go('home');return false">Novel Qu<small>Baca novel gratis</small></a>
-<nav class="nav"><a href="#" onclick="go('home');return false">Beranda</a><a href="#" onclick="go('catalog');return false">Novel</a><a href="#" onclick="go('genres');return false">Genre</a><a href="#" onclick="go('bookmark');return false">Bookmark</a></nav>
-<div class="search"><span>⌕</span><input id="search" placeholder="Cari novel..." oninput="search(this.value)"></div>
+<header><div class="wrap">
+  <div class="top"><div class="logo">Novel Qu<small>Baca novel gratis</small></div></div>
+  <nav>
+    <button class="navbtn active" onclick="go('home')">Beranda</button>
+    <button class="navbtn" onclick="go('catalog')">Novel</button>
+    <button class="navbtn" onclick="go('bookmark')">Bookmark</button>
+    <button class="navbtn" onclick="go('genre')">Genre</button>
+  </nav>
 </div></header>
+
 <main class="wrap">
 <section id="home" class="page active">
-<div class="hero"><h1>Selamat datang di<br>Novel Qu</h1><p>Baca berbagai novel gratis kapan saja, di mana saja. Temukan cerita favoritmu dan nikmati pengalaman membaca yang nyaman.</p><button class="btn" onclick="go('catalog')">Mulai Membaca →</button><div class="art"><div class="orb"></div><div class="book"></div></div></div>
-<div class="section"><div class="sectionhead"><h2>Novel Terbaru</h2><a class="meta" href="#" onclick="go('catalog');return false">Lihat semua ›</a></div><div id="latest" class="grid"></div></div>
-<div class="notice">ⓘ　Fondasi Novel Qu sudah siap. Data saat ini adalah contoh; pada tahap berikutnya kita akan menghubungkannya ke database cloud.</div>
-<div class="section"><div class="sectionhead"><h2>Populer</h2></div><div id="popular" class="grid"></div></div>
+  <div class="hero"><h1>Selamat datang di Novel Qu</h1>
+  <p>Baca berbagai novel gratis kapan saja, di mana saja. Temukan cerita favoritmu dan nikmati pengalaman membaca yang nyaman.</p>
+  <button class="btn" onclick="go('catalog')">Mulai Membaca →</button></div>
+  <div class="sectionhead"><h2>Novel Terbaru</h2><span>Gratis</span></div>
+  <div id="homeList" class="grid"></div>
 </section>
-<section id="catalog" class="page"><div class="sectionhead"><h2>Semua Novel</h2><span id="count" class="meta"></span></div><div id="catalogList" class="list"></div></section>
-<section id="genres" class="page"><div class="sectionhead"><h2>Genre</h2></div><div id="genreList" class="grid"></div></section>
+
+<section id="catalog" class="page">
+  <div class="search"><input id="q" placeholder="Cari novel..." oninput="renderCatalog()"></div>
+  <div class="sectionhead"><h2>Semua Novel</h2><span id="count"></span></div>
+  <div id="catalogList" class="grid"></div>
+</section>
+
+<section id="genre" class="page">
+  <div class="sectionhead"><h2>Pilih Genre</h2></div><div id="genres"></div>
+  <div id="genreList" class="grid"></div>
+</section>
+
+<section id="bookmark" class="page">
+  <div class="sectionhead"><h2>Bookmark</h2></div><div id="bookmarkList" class="grid"></div>
+</section>
+
 <section id="detail" class="page"><div id="detailBox"></div></section>
 <section id="reader" class="page"><div id="readerBox"></div></section>
-<section id="bookmark" class="page"><div class="sectionhead"><h2>Bookmark</h2></div><div id="bookmarkList" class="list"></div></section>
 </main>
-<nav class="bottom"><button data-page="home" onclick="go('home')">⌂<br>Beranda</button><button data-page="catalog" onclick="go('catalog')">▤<br>Novel</button><button data-page="bookmark" onclick="go('bookmark')">☆<br>Bookmark</button><button data-page="genres" onclick="go('genres')">◇<br>Genre</button></nav>
+
+<div class="bottom">
+<button class="active" onclick="go('home')">⌂<br>Beranda</button>
+<button onclick="go('catalog')">▤<br>Novel</button>
+<button onclick="go('bookmark')">☆<br>Bookmark</button>
+<button onclick="go('genre')">◇<br>Genre</button>
+</div>
+
 <script>
-const icon=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v17H6.5A2.5 2.5 0 0 0 4 22V5.5ZM20 5.5A2.5 2.5 0 0 0 17.5 3H13v17h4.5A2.5 2.5 0 0 1 20 22V5.5Z"/></svg>`;
 const novels=[
-{id:1,title:"Charlie Wade",genre:"Sunting",chapters:120,rating:4.8,date:"20 Mei 2024",desc:"Kisah seorang pria yang menjalani kehidupan penuh kejutan setelah rahasia besar tentang dirinya mulai terungkap.",text:["Hari itu dimulai seperti hari biasa. Tidak ada yang menyangka bahwa satu kabar sederhana akan mengubah seluruh hidupnya.","Perjalanan baru saja dimulai."]},
-{id:2,title:"Legenda Pedang Abadi",genre:"Fantasi",chapters:120,rating:4.9,date:"18 Mei 2024",desc:"Seorang pemuda menemukan warisan pedang kuno dan memulai perjalanan menuju puncak dunia persilatan.",text:["Di bawah langit yang dipenuhi bintang, sebuah pedang tua tertanam di tengah reruntuhan.","Tidak seorang pun mampu mengangkatnya selama ratusan tahun."]},
-{id:3,title:"Reinkarnasi Sang Raja",genre:"Action",chapters:95,rating:4.7,date:"17 Mei 2024",desc:"Sang raja kembali ke masa lalu dengan seluruh ingatan kehidupannya dan kesempatan untuk mengubah takdir.",text:["Kematian seharusnya menjadi akhir. Tetapi ketika matanya terbuka kembali, ia melihat kamar yang telah lama ia tinggalkan.","Ia mendapatkan kesempatan kedua."]},
-{id:4,title:"Dewa Pedang Terakhir",genre:"Fantasi",chapters:310,rating:4.9,date:"10 Mei 2024",desc:"Perjalanan seorang pendekar terakhir yang berusaha menemukan arti sebenarnya dari jalan pedang.",text:["Pedang itu tidak memiliki nama. Namun semua orang yang melihatnya tahu bahwa senjata tersebut pernah mengakhiri sebuah era.","Ia berjalan sendirian melewati pegunungan."]},
-{id:5,title:"Cinta di Balik Hujan",genre:"Romantis",chapters:76,rating:4.6,date:"12 Mei 2024",desc:"Kisah pertemuan kembali dua orang yang pernah saling mencintai.",text:["Hujan turun tepat ketika mereka bertemu kembali setelah bertahun-tahun.","Tidak ada yang berubah dari tatapan itu."]},
-{id:6,title:"Pewaris Tak Terkalahkan",genre:"Action",chapters:208,rating:4.8,date:"15 Mei 2024",desc:"Seorang pewaris yang dianggap lemah ternyata menyimpan kekuatan yang tidak pernah diketahui siapa pun.",text:["Semua orang menganggapnya sebagai pewaris paling lemah.","Mereka tidak tahu bahwa selama bertahun-tahun ia sengaja menyembunyikan kekuatannya."]}
+{id:1,title:"Charlie Wade",genre:"Sunting",chapters:120,rating:4.8,date:"20 Mei 2024",desc:"Kisah seorang pria yang menjalani kehidupan penuh kejutan dan perubahan besar."},
+{id:2,title:"Legenda Pedang Abadi",genre:"Fantasi",chapters:120,rating:4.9,date:"18 Mei 2024",desc:"Seorang pemuda menempuh jalan pedang untuk mencari kekuatan dan kebenaran."},
+{id:3,title:"Reinkarnasi Sang Raja",genre:"Fantasi",chapters:95,rating:4.7,date:"17 Mei 2024",desc:"Sang raja kembali ke masa lalu dan memulai perjalanan keduanya."},
+{id:4,title:"Dewa Pedang Terakhir",genre:"Aksi",chapters:310,rating:4.9,date:"10 Mei 2024",desc:"Perjalanan seorang pendekar menuju puncak dunia persilatan."},
+{id:5,title:"Cinta di Balik Hujan",genre:"Romantis",chapters:76,rating:4.6,date:"12 Mei 2024",desc:"Kisah pertemuan dua hati yang dipertemukan oleh hujan."},
+{id:6,title:"Pewaris Tak Terkalahkan",genre:"Aksi",chapters:208,rating:4.8,date:"15 Mei 2024",desc:"Seorang pewaris menemukan kekuatan yang selama ini tersembunyi."}
 ];
-let marks=JSON.parse(localStorage.getItem("nq_marks")||"[]"),current=null;
-function esc(x){return String(x).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
-function card(n){return `<article class="card" onclick="detail(${n.id})"><div class="cover">${icon}</div><div class="body"><div class="title">${esc(n.title)}</div><div class="meta">${esc(n.genre)} · ${n.chapters} Bab</div><div class="meta">★ ${n.rating} · ${esc(n.date)}</div></div></article>`}
-function row(n){return `<div class="row" onclick="detail(${n.id})"><div class="rowcover">${icon}</div><div class="rowinfo"><b>${esc(n.title)}</b><div class="meta">${esc(n.genre)} · ${n.chapters} Bab</div><div class="meta">★ ${n.rating} · Update ${esc(n.date)}</div></div><span class="arrow">›</span></div>`}
-function render(){latest.innerHTML=novels.slice(0,4).map(card).join("");popular.innerHTML=novels.slice().sort((a,b)=>b.rating-a.rating).slice(0,4).map(card).join("");catalogList.innerHTML=novels.map(row).join("");count.textContent=novels.length+" novel";let gs=[...new Set(novels.map(n=>n.genre))];genreList.innerHTML=gs.map(g=>`<article class="card" onclick="filterGenre('${esc(g)}')"><div class="cover">${icon}</div><div class="body"><div class="title">${esc(g)}</div><div class="meta">${novels.filter(n=>n.genre===g).length} novel</div></div></article>`).join("");renderMarks()}
-function go(id){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll(".bottom button").forEach(x=>x.classList.toggle("active",x.dataset.page===id));scrollTo(0,0)}
-function detail(id){current=novels.find(n=>n.id===id);let saved=marks.includes(id);detailBox.innerHTML=`<button class="back" onclick="go('catalog')">← Kembali</button><div class="detail"><div class="detailtop"><div class="bigcover">${icon}</div><div><h1>${esc(current.title)}</h1><div class="meta">${esc(current.genre)} · ${current.chapters} Bab · ★ ${current.rating}</div><div class="actions"><button class="btn" onclick="read(${id},1)">▶ Mulai Baca</button><button class="btn light" onclick="bookmark(${id})">${saved?"★ Tersimpan":"☆ Bookmark"}</button></div></div></div><p class="desc">${esc(current.desc)}</p><h2>Daftar Bab</h2><div class="chapters">${Array.from({length:Math.min(30,current.chapters)},(_,i)=>`<div class="chapter" onclick="read(${id},${i+1})"><span>Bab ${i+1}</span><span class="meta">Baca ›</span></div>`).join("")}</div></div>`;go("detail")}
-function read(id,ch){current=novels.find(n=>n.id===id);let pct=ch/current.chapters*100;let text=current.text||["Isi bab contoh."];readerBox.innerHTML=`<div class="reader"><div class="readerhead"><div><h1>${esc(current.title)}</h1><div class="meta">Bab ${ch} · ${esc(current.genre)}</div></div><button class="back" onclick="detail(${id})">Daftar Bab</button></div><div class="bar"><i style="width:${pct}%"></i></div><article class="article"><h2>Bab ${ch}</h2>${text.map(p=>`<p>${esc(p)}</p>`).join("")}<p>Reader fondasi Novel Qu. Isi bab nantinya akan diambil otomatis dari database.</p></article><div class="reader-nav"><button class="btn light" onclick="${ch>1?`read(${id},${ch-1})`:`alert('Bab pertama')`}">← Sebelumnya</button><button class="btn" onclick="${ch<current.chapters?`read(${id},${ch+1})`:`alert('Bab terakhir')`}">Berikutnya →</button></div></div>`;go("reader")}
-function bookmark(id){marks=marks.includes(id)?marks.filter(x=>x!==id):[...marks,id];localStorage.setItem("nq_marks",JSON.stringify(marks));renderMarks();detail(id)}
-function renderMarks(){let a=novels.filter(n=>marks.includes(n.id));bookmarkList.innerHTML=a.length?a.map(row).join(""):`<div class="empty">Belum ada bookmark.<br>Simpan novel favoritmu di sini.</div>`}
-function filterGenre(g){catalogList.innerHTML=novels.filter(n=>n.genre===g).map(row).join("");count.textContent="Genre: "+g+" · "+novels.filter(n=>n.genre===g).length+" novel";go("catalog")}
-function search(q){q=q.toLowerCase().trim();if(!q)return;let n=novels.find(n=>(n.title+n.genre).toLowerCase().includes(q));if(n)detail(n.id)}
-render();
+const marks=()=>JSON.parse(localStorage.getItem("nq_marks")||"[]");
+const saveMarks=x=>localStorage.setItem("nq_marks",JSON.stringify(x));
+function esc(x){return String(x).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+function card(n){return `<article class="card" onclick="detail(${n.id})"><div class="cover">▯</div><h3>${esc(n.title)}</h3><div class="meta">${n.genre} · ⭐ ${n.rating}</div><p class="desc">${esc(n.desc)}</p></article>`}
+function go(id){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");scrollTo(0,0);if(id==="catalog")renderCatalog();if(id==="bookmark")renderBookmarks();}
+function renderHome(){homeList.innerHTML=novels.slice(0,4).map(card).join("")}
+function renderCatalog(){let q=(document.getElementById("q")?.value||"").toLowerCase();let a=novels.filter(n=>(n.title+n.genre).toLowerCase().includes(q));count.textContent=a.length+" novel";catalogList.innerHTML=a.length?a.map(card).join(""):'<div class="empty">Novel tidak ditemukan.</div>'}
+function renderGenres(){let gs=[...new Set(novels.map(n=>n.genre))];genres.innerHTML=gs.map(g=>`<span class="genre" onclick="showGenre('${esc(g)}')">${esc(g)}</span>`).join("")}
+function showGenre(g){genreList.innerHTML=novels.filter(n=>n.genre===g).map(card).join("")}
+function renderBookmarks(){let a=novels.filter(n=>marks().includes(n.id));bookmarkList.innerHTML=a.length?a.map(card).join(""):'<div class="empty">Belum ada bookmark.</div>'}
+function detail(id){let n=novels.find(x=>x.id===id),m=marks(),saved=m.includes(id);detailBox.innerHTML=`<div class="back"><button class="btn" onclick="go('catalog')">← Kembali</button></div><div class="detail"><div class="cover">▯</div><h1>${esc(n.title)}</h1><div class="meta">${n.genre} · ⭐ ${n.rating} · ${n.chapters} bab</div><p>${esc(n.desc)}</p><button class="btn" onclick="toggleMark(${id})">${saved?"★ Hapus Bookmark":"☆ Bookmark"}</button><div class="sectionhead"><h2>Daftar Bab</h2></div>${Array.from({length:n.chapters},(_,i)=>`<div class="chapter" onclick="read(${id},${i+1})"><span>Bab ${i+1}</span><span>›</span></div>`).slice(0,30).join("")}</div>`;go("detail")}
+function toggleMark(id){let m=marks();m=m.includes(id)?m.filter(x=>x!==id):[...m,id];saveMarks(m);detail(id)}
+function read(id,ch){let n=novels.find(x=>x.id===id);readerBox.innerHTML=`<div class="readerbar"><button onclick="detail(${id})">← Daftar Bab</button><span>Bab ${ch}</span><div><button onclick="font(-1)">A−</button><button onclick="font(1)">A+</button></div></div><article class="reader"><h1>${esc(n.title)}</h1><h2>Bab ${ch}</h2><p>Ini adalah halaman pembaca Novel Qu. Konten bab dapat kamu isi atau tambahkan ke data novel. Nikmati membaca dengan nyaman.</p><p>Setiap bab dapat memiliki teks cerita sendiri. Nantinya kita bisa memasukkan seluruh isi novel dan membuat navigasi bab sebelumnya dan berikutnya.</p></article>`;go("reader")}
+function font(x){let r=document.querySelector(".reader");if(r)r.style.fontSize=(parseFloat(getComputedStyle(r).fontSize)+x)+"px"}
+renderHome();renderCatalog();renderGenres();
 </script>
-</body>
-</html>
+</body></html>
