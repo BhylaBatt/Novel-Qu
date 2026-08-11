@@ -1,1960 +1,633 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novel Qu - Baca Novel Online</title>
+  <style>
+    :root {
+      --bg-color: #f4f6f8;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --text: #1f2937;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+    }
 
-<meta name="description" content="Novel Qu - Baca novel online gratis">
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-<title>Novel Qu - Baca Novel Gratis</title>
+    body {
+      background-color: var(--bg-color);
+      color: var(--text);
+      line-height: 1.5;
+    }
 
-<style>
+    header {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
 
-*{
-  box-sizing:border-box;
-}
+    .nav-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-body{
-  margin:0;
-  background:#f6f8fb;
-  color:#172333;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-}
+    .logo {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: var(--primary);
+      text-decoration: none;
+      cursor: pointer;
+    }
 
-header{
-  background:#fff;
-  border-bottom:1px solid #e5e8ec;
-  position:sticky;
-  top:0;
-  z-index:10;
-}
+    .nav-buttons {
+      display: flex;
+      gap: 8px;
+    }
 
-.wrap{
-  max-width:900px;
-  margin:auto;
-  padding:0 16px;
-}
+    .btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
 
-.top{
-  height:70px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
+    .btn:hover {
+      background: var(--border);
+    }
 
-.logo{
-  font-size:23px;
-  font-weight:900;
-}
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 16px;
+    }
 
-.logo small{
-  display:block;
-  font-size:11px;
-  color:#737c86;
-  font-weight:500;
-}
+    .view-section {
+      display: none;
+    }
 
-nav{
-  display:flex;
-  gap:8px;
-  overflow:auto;
-  padding:0 0 10px;
-}
+    .view-section.active {
+      display: block;
+    }
 
-.navbtn,
-.bottom button{
-  border:0;
-  background:none;
-  padding:8px 12px;
-  color:#66717d;
-  font-size:14px;
-  cursor:pointer;
-}
+    /* Controls & Filter */
+    .controls {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
 
-.navbtn.active,
-.bottom button.active{
-  color:#172333;
-  font-weight:800;
-}
+    .search-input, .genre-select {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
 
-.search{
-  background:#fff;
-  border:1px solid #e5e8ec;
-  border-radius:12px;
-  padding:10px 12px;
-  margin:16px 0;
-}
+    .search-input {
+      flex: 1;
+    }
 
-.search input{
-  border:0;
-  outline:0;
-  width:100%;
-  font-size:15px;
-}
+    /* Novel Grid */
+    .novel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
+    }
 
-.page{
-  display:none;
-  padding:20px 0 90px;
-}
+    .novel-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
 
-.page.active{
-  display:block;
-}
+    .novel-card:hover {
+      transform: translateY(-2px);
+    }
 
-.hero{
-  background:linear-gradient(120deg,#eef3f8,#fff);
-  border-radius:22px;
-  padding:32px 24px;
-  margin-bottom:24px;
-}
+    .novel-cover {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      background: #e2e8f0;
+    }
 
-.hero h1{
-  font-size:34px;
-  margin:0 0 12px;
-}
+    .novel-info {
+      padding: 8px 10px;
+    }
 
-.hero p{
-  color:#68727d;
-  line-height:1.7;
-}
+    .novel-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-.btn{
-  display:inline-block;
-  border:0;
-  border-radius:12px;
-  background:#172333;
-  color:#fff;
-  padding:12px 18px;
-  font-weight:800;
-  cursor:pointer;
-}
+    .novel-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
 
-.btn.light{
-  background:#eef1f4;
-  color:#172333;
-}
+    /* Detail View */
+    .detail-card {
+      background: var(--card-bg);
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
 
-.sectionhead{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:20px 0 12px;
-}
+    .detail-cover {
+      width: 110px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
 
-.sectionhead h2{
-  margin:0;
-}
+    .detail-content {
+      flex: 1;
+    }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;
-}
+    .detail-title {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
 
-.card{
-  background:#fff;
-  border:1px solid #e5e8ec;
-  border-radius:16px;
-  padding:16px;
-  cursor:pointer;
-  transition:.2s;
-}
+    .detail-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
 
-.card:hover{
-  transform:translateY(-2px);
-  box-shadow:0 8px 20px #17233312;
-}
+    .action-row {
+      margin-top: 12px;
+      display: flex;
+      gap: 8px;
+    }
 
-.cover{
-  height:180px;
-  border-radius:12px;
-  background:#edf1f5;
-  display:grid;
-  place-items:center;
-  color:#9aa4af;
-  font-size:42px;
-  margin-bottom:12px;
-  overflow:hidden;
-}
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+    }
 
-.detail .cover{
-  height:260px;
-  max-width:220px;
-}
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
 
-.cover img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+    /* Chapter List */
+    .chapter-list-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      padding: 16px;
+    }
 
-.card h3{
-  margin:0 0 6px;
-  font-size:17px;
-}
+    .chapter-list-header {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
 
-.meta{
-  font-size:13px;
-  color:#737c86;
-}
+    .chapter-item {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
 
-.desc{
-  font-size:13px;
-  color:#737c86;
-  line-height:1.6;
-}
+    .chapter-item:last-child {
+      border-bottom: none;
+    }
 
-.genre{
-  display:inline-block;
-  background:#eef3f8;
-  border-radius:20px;
-  padding:7px 12px;
-  margin:3px;
-  font-size:12px;
-  cursor:pointer;
-}
+    .chapter-item:hover {
+      background: var(--bg-color);
+    }
 
-.genre:hover{
-  background:#172333;
-  color:#fff;
-}
+    /* Reader View */
+    .readerbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+      border-radius: 8px;
+    }
 
-.detail{
-  background:#fff;
-  border-radius:18px;
-  padding:20px;
-  border:1px solid #e5e8ec;
-}
+    .reader {
+      background: var(--card-bg);
+      padding: 24px 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 18px;
+    }
 
-.back{
-  margin-bottom:14px;
-}
+    .reader h1 {
+      font-size: 1.4rem;
+      text-align: center;
+      color: var(--text-muted);
+    }
 
-.chapter{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  padding:15px 6px;
-  border-bottom:1px solid #edf0f3;
-  cursor:pointer;
-}
+    .reader h2 {
+      font-size: 1.2rem;
+      text-align: center;
+      margin-bottom: 24px;
+    }
 
-.chapter:hover{
-  background:#f8fafc;
-}
+    .reader p {
+      margin-bottom: 16px;
+      text-align: justify;
+    }
 
-.chapter-title{
-  font-weight:600;
-}
-
-.reader{
-  background:#fff;
-  border-radius:16px;
-  padding:22px;
-  line-height:2;
-  font-size:18px;
-  border:1px solid #e5e8ec;
-}
-
-.reader h1{
-  line-height:1.3;
-}
-
-.reader h2{
-  color:#68727d;
-  font-size:18px;
-  margin-bottom:25px;
-}
-
-.reader p{
-  margin:0 0 22px;
-}
-
-.readerbar{
-  display:flex;
-  gap:8px;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:14px;
-  flex-wrap:wrap;
-}
-
-.readerbar button{
-  border:1px solid #dfe4e9;
-  background:#fff;
-  border-radius:9px;
-  padding:8px 12px;
-  cursor:pointer;
-}
-
-.bottom{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:#fff;
-  border-top:1px solid #e5e8ec;
-  display:flex;
-  justify-content:space-around;
-  padding:7px;
-  z-index:20;
-}
-
-.empty{
-  padding:30px;
-  text-align:center;
-  color:#737c86;
-}
-
-.error{
-  background:#fff0f0;
-  color:#a12626;
-  border:1px solid #f0caca;
-  border-radius:12px;
-  padding:16px;
-  line-height:1.6;
-}
-
-.loading{
-  padding:25px 0;
-  color:#737c86;
-}
-
-.status{
-  font-size:13px;
-  color:#737c86;
-}
-
-@media(min-width:700px){
-
-  .grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .bottom{
-    display:none;
-  }
-
-}
-
-@media(max-width:500px){
-
-  .hero h1{
-    font-size:28px;
-  }
-
-  .cover{
-    height:150px;
-  }
-
-  .detail .cover{
-    height:230px;
-  }
-
-}
-
-</style>
+    .empty, .error, .loading {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-muted);
+    }
+  </style>
 </head>
-
 <body>
 
-<header>
-
-  <div class="wrap">
-
-    <div class="top">
-
-      <div class="logo">
-        Novel Qu
-        <small>Baca novel gratis</small>
+  <header>
+    <div class="nav-container">
+      <div class="logo" onclick="go('home')">Novel Qu</div>
+      <div class="nav-buttons">
+        <button class="btn" onclick="go('home')">Beranda</button>
+        <button class="btn" onclick="go('bookmarks')">Bookmark</button>
       </div>
-
     </div>
-
-    <nav>
-
-      <button
-        class="navbtn active"
-        onclick="go('home')"
-      >
-        Beranda
-      </button>
-
-      <button
-        class="navbtn"
-        onclick="go('catalog')"
-      >
-        Novel
-      </button>
-
-      <button
-        class="navbtn"
-        onclick="go('bookmark')"
-      >
-        Bookmark
-      </button>
-
-      <button
-        class="navbtn"
-        onclick="go('genre')"
-      >
-        Genre
-      </button>
-
-    </nav>
-
-  </div>
-
-</header>
-
-
-<main class="wrap">
-
-
-<!-- =====================================================
-     HOME
-===================================================== -->
-
-<section
-  id="home"
-  class="page active"
->
-
-  <div class="hero">
-
-    <h1>
-      Selamat datang di Novel Qu
-    </h1>
-
-    <p>
-      Baca berbagai novel gratis kapan saja,
-      di mana saja. Temukan cerita favoritmu
-      dan nikmati pengalaman membaca yang nyaman.
-    </p>
-
-    <button
-      class="btn"
-      onclick="go('catalog')"
-    >
-      Mulai Membaca →
-    </button>
-
-  </div>
-
-
-  <div class="sectionhead">
-
-    <h2>
-      Novel Terbaru
-    </h2>
-
-    <span
-      id="homeStatus"
-      class="status"
-    >
-      Memuat...
-    </span>
-
-  </div>
-
-
-  <div
-    id="homeList"
-    class="grid"
-  >
-
-    <div class="empty">
-      Memuat novel...
-    </div>
-
-  </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     CATALOG
-===================================================== -->
-
-<section
-  id="catalog"
-  class="page"
->
-
-  <div class="search">
-
-    <input
-      id="q"
-      type="search"
-      placeholder="Cari novel..."
-      oninput="renderCatalog()"
-    >
-
-  </div>
-
-
-  <div class="sectionhead">
-
-    <h2>
-      Semua Novel
-    </h2>
-
-    <span
-      id="count"
-      class="status"
-    >
-      0 novel
-    </span>
-
-  </div>
-
-
-  <div
-    id="catalogList"
-    class="grid"
-  >
-
-    <div class="empty">
-      Memuat novel...
-    </div>
-
-  </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     GENRE
-===================================================== -->
-
-<section
-  id="genre"
-  class="page"
->
-
-  <div class="sectionhead">
-
-    <h2>
-      Pilih Genre
-    </h2>
-
-  </div>
-
-
-  <div id="genres"></div>
-
-
-  <div
-    id="genreList"
-    class="grid"
-  ></div>
-
-</section>
-
-
-
-<!-- =====================================================
-     BOOKMARK
-===================================================== -->
-
-<section
-  id="bookmark"
-  class="page"
->
-
-  <div class="sectionhead">
-
-    <h2>
-      Bookmark
-    </h2>
-
-  </div>
-
-
-  <div
-    id="bookmarkList"
-    class="grid"
-  ></div>
-
-</section>
-
-
-
-<!-- =====================================================
-     DETAIL
-===================================================== -->
-
-<section
-  id="detail"
-  class="page"
->
-
-  <div id="detailBox"></div>
-
-</section>
-
-
-
-<!-- =====================================================
-     READER
-===================================================== -->
-
-<section
-  id="reader"
-  class="page"
->
-
-  <div id="readerBox"></div>
-
-</section>
-
-
-</main>
-
-
-
-<!-- =====================================================
-     MOBILE NAV
-===================================================== -->
-
-<div class="bottom">
-
-  <button
-    class="active"
-    onclick="go('home')"
-  >
-    ⌂<br>
-    Beranda
-  </button>
-
-  <button
-    onclick="go('catalog')"
-  >
-    ▤<br>
-    Novel
-  </button>
-
-  <button
-    onclick="go('bookmark')"
-  >
-    ☆<br>
-    Bookmark
-  </button>
-
-  <button
-    onclick="go('genre')"
-  >
-    ◇<br>
-    Genre
-  </button>
-
-</div>
-
-
-
-<script>
-
-/* =========================================================
-   SUPABASE
-========================================================= */
-
-const SUPABASE_URL =
-"https://mcqaljrpbvwjzvzhkigk.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_Y3sTZvucMvEXdV9GdwQtGw_CI0t0b2u";
-
-
-/* =========================================================
-   DATA
-========================================================= */
-
-let novels = [];
-
-let chapters = [];
-
-
-/* =========================================================
-   SUPABASE REQUEST
-========================================================= */
-
-async function supabaseFetch(
-  table,
-  params=""
-){
-
-  const url =
-    SUPABASE_URL +
-    "/rest/v1/" +
-    table +
-    "?" +
-    params;
-
-
-  const response =
-    await fetch(
-      url,
-      {
-        method:"GET",
-
-        headers:{
-          "apikey":SUPABASE_KEY,
-          "Authorization":
-            "Bearer " + SUPABASE_KEY,
-          "Content-Type":
-            "application/json"
+  </header>
+
+  <main class="container">
+
+    <!-- BERANDA & DAFTAR NOVEL -->
+    <section id="homeView" class="view-section active">
+      <div class="controls">
+        <input type="text" id="searchInput" class="search-input" placeholder="Cari novel..." oninput="handleFilter()">
+        <select id="genreSelect" class="genre-select" onchange="handleFilter()">
+          <option value="">Semua Genre</option>
+        </select>
+      </div>
+      <div id="novelGrid" class="novel-grid">
+        <div class="loading">Memuat novel...</div>
+      </div>
+    </section>
+
+    <!-- BOOKMARKS -->
+    <section id="bookmarksView" class="view-section">
+      <h2 style="margin-bottom: 16px;">Bookmark Saya</h2>
+      <div id="bookmarkGrid" class="novel-grid">
+        <div class="empty">Belum ada bookmark disimpan.</div>
+      </div>
+    </section>
+
+    <!-- DETAIL NOVEL -->
+    <section id="detailView" class="view-section">
+      <button class="btn" onclick="go('home')" style="margin-bottom: 12px;">← Kembali</button>
+      <div id="detailBox"></div>
+      <div class="chapter-list-card">
+        <div class="chapter-list-header">Daftar Bab</div>
+        <div id="chapterListBox">
+          <div class="loading">Memuat daftar bab...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PEMBACA CHAPTER -->
+    <section id="readerView" class="view-section">
+      <div id="readerBox"></div>
+    </section>
+
+  </main>
+
+  <script>
+    // KONFIGURASI SUPABASE
+    const SUPABASE_URL = "https://mcqaljrpbvwjzvzhkigk.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1jcWFsanJwYnZ3anp2emhraWdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxOTA1ODcsImV4cCI6MjA1NTc2NjU4N30.Zz12G59W-_p-fC28gT27L3gBq-R2N6C9K8m5X";
+
+    // STATE LOKAL
+    let novels = [];
+    let bookmarks = JSON.parse(localStorage.getItem("nq_bookmarks") || "[]");
+    let currentFontSize = 18;
+
+    // FUNGSI UTAMA FETCH SUPABASE
+    async function supabaseFetch(table, params = "") {
+      const url = SUPABASE_URL + "/rest/v1/" + table + "?" + params;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + SUPABASE_KEY,
+          "Content-Type": "application/json"
         }
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error("Supabase error " + response.status + ": " + errorText);
       }
-    );
 
-
-  if(!response.ok){
-
-    const errorText =
-      await response.text();
-
-    throw new Error(
-      "Supabase error " +
-      response.status +
-      ": " +
-      errorText
-    );
-
-  }
-
-
-  return await response.json();
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function esc(x){
-
-  return String(x ?? "")
-    .replace(
-      /[&<>"']/g,
-      function(m){
-
-        return {
-          "&":"&amp;",
-          "<":"&lt;",
-          ">":"&gt;",
-          '"':"&quot;",
-          "'":"&#39;"
-        }[m];
-
-      }
-    );
-
-}
-
-
-/* =========================================================
-   COVER
-========================================================= */
-
-function coverHTML(n){
-
-  if(n.cover_url){
-
-    return `
-
-      <div class="cover">
-
-        <img
-          src="${esc(n.cover_url)}"
-          alt="${esc(n.title)}"
-          loading="lazy"
-        >
-
-      </div>
-
-    `;
-
-  }
-
-
-  return `
-
-    <div class="cover">
-      📖
-    </div>
-
-  `;
-
-}
-
-
-/* =========================================================
-   CARD
-========================================================= */
-
-function card(n){
-
-  return `
-
-    <article
-      class="card"
-      onclick="detail(${Number(n.id)})"
-    >
-
-      ${coverHTML(n)}
-
-      <h3>
-        ${esc(
-          n.title ||
-          "Tanpa judul"
-        )}
-      </h3>
-
-
-      <div class="meta">
-
-        ${esc(
-          n.genre ||
-          "Umum"
-        )}
-
-        · ⭐
-        ${n.rating ?? "0"}
-
-      </div>
-
-
-      <div class="meta">
-
-        👁
-        ${Number(
-          n.views || 0
-        ).toLocaleString("id-ID")}
-
-      </div>
-
-
-      <p class="desc">
-
-        ${esc(
-          n.description ||
-          n.desc ||
-          "Belum ada deskripsi novel."
-        )}
-
-      </p>
-
-    </article>
-
-  `;
-
-}
-
-
-/* =========================================================
-   LOAD NOVELS
-========================================================= */
-
-async function loadNovels(){
-
-  try{
-
-    novels =
-      await supabaseFetch(
-        "novels",
-        "select=*&order=created_at.desc"
-      );
-
-
-    console.log(
-      "Novel berhasil dimuat:",
-      novels
-    );
-
-
-    renderHome();
-
-    renderCatalog();
-
-    renderGenres();
-
-
-  }catch(error){
-
-    console.error(error);
-
-
-    const message =
-      `<div class="error">
-
-        <b>
-          Gagal mengambil data novel.
-        </b>
-
-        <br><br>
-
-        ${esc(error.message)}
-
-      </div>`;
-
-
-    document.getElementById(
-      "homeList"
-    ).innerHTML = message;
-
-
-    document.getElementById(
-      "catalogList"
-    ).innerHTML = message;
-
-  }
-
-}
-
-
-/* =========================================================
-   LOAD CHAPTERS
-   TABEL = chapters
-========================================================= */
-
-async function loadChapters(
-  novelId
-){
-
-  try{
-
-    chapters =
-      await supabaseFetch(
-        "chapters",
-        "select=id,chapter_number,novel_id,title,content,views" +
-        "&novel_id=eq." +
-        encodeURIComponent(novelId) +
-        "&order=chapter_number.asc"
-      );
-
-
-    console.log(
-      "Chapter berhasil dimuat:",
-      chapters
-    );
-
-
-    return chapters;
-
-
-  }catch(error){
-
-    console.error(
-      "Gagal mengambil chapters:",
-      error
-    );
-
-    throw error;
-
-  }
-
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function go(id){
-
-  document
-    .querySelectorAll(".page")
-    .forEach(
-      x =>
-        x.classList.remove("active")
-    );
-
-
-  const page =
-    document.getElementById(id);
-
-
-  if(page){
-
-    page.classList.add("active");
-
-  }
-
-
-  document
-    .querySelectorAll(".navbtn")
-    .forEach(
-      x =>
-        x.classList.remove("active")
-    );
-
-
-  document
-    .querySelectorAll(".bottom button")
-    .forEach(
-      x =>
-        x.classList.remove("active")
-    );
-
-
-  scrollTo(0,0);
-
-
-  if(id === "catalog"){
-
-    renderCatalog();
-
-  }
-
-
-  if(id === "bookmark"){
-
-    renderBookmarks();
-
-  }
-
-}
-
-
-/* =========================================================
-   HOME
-========================================================= */
-
-function renderHome(){
-
-  const list =
-    novels
-      .slice()
-      .sort(
-        (a,b) =>
-          new Date(
-            b.created_at || 0
-          ) -
-          new Date(
-            a.created_at || 0
-          )
-      )
-      .slice(0,6);
-
-
-  document.getElementById(
-    "homeList"
-  ).innerHTML =
-
-    list.length
-
-      ? list
-          .map(card)
-          .join("")
-
-      : `
-
-        <div class="empty">
-
-          Belum ada novel
-          di database.
-
-        </div>
-
-      `;
-
-
-  document.getElementById(
-    "homeStatus"
-  ).textContent =
-    novels.length +
-    " novel";
-
-}
-
-
-/* =========================================================
-   CATALOG
-========================================================= */
-
-function renderCatalog(){
-
-  const input =
-    document.getElementById("q");
-
-
-  if(!input) return;
-
-
-  const q =
-    input.value
-      .toLowerCase()
-      .trim();
-
-
-  const list =
-    novels.filter(
-      n => {
-
-        const title =
-          String(
-            n.title || ""
-          ).toLowerCase();
-
-
-        const genre =
-          String(
-            n.genre || ""
-          ).toLowerCase();
-
-
-        const slug =
-          String(
-            n.slug || ""
-          ).toLowerCase();
-
-
-        return (
-          title.includes(q) ||
-          genre.includes(q) ||
-          slug.includes(q)
-        );
-
-      }
-    );
-
-
-  document.getElementById(
-    "count"
-  ).textContent =
-    list.length +
-    " novel";
-
-
-  document.getElementById(
-    "catalogList"
-  ).innerHTML =
-
-    list.length
-
-      ? list
-          .map(card)
-          .join("")
-
-      : `
-
-        <div class="empty">
-
-          Novel tidak ditemukan.
-
-        </div>
-
-      `;
-
-}
-
-
-/* =========================================================
-   GENRE
-========================================================= */
-
-function renderGenres(){
-
-  const list =
-    [
-      ...new Set(
-        novels
-          .map(
-            n => n.genre
-          )
-          .filter(Boolean)
-      )
-    ];
-
-
-  document.getElementById(
-    "genres"
-  ).innerHTML =
-
-    list.length
-
-      ? list
-          .map(
-            g => `
-
-              <span
-                class="genre"
-                onclick='showGenre(${JSON.stringify(g)})'
-              >
-
-                ${esc(g)}
-
-              </span>
-
-            `
-          )
-          .join("")
-
-      : `
-
-        <div class="empty">
-
-          Belum ada genre.
-
-        </div>
-
-      `;
-
-}
-
-
-function showGenre(g){
-
-  const list =
-    novels.filter(
-      n => n.genre === g
-    );
-
-
-  document.getElementById(
-    "genreList"
-  ).innerHTML =
-
-    list.length
-
-      ? list
-          .map(card)
-          .join("")
-
-      : `
-
-        <div class="empty">
-
-          Tidak ada novel
-          dalam genre ini.
-
-        </div>
-
-      `;
-
-}
-
-
-/* =========================================================
-   BOOKMARK
-========================================================= */
-
-function getBookmarks(){
-
-  try{
-
-    return JSON.parse(
-      localStorage.getItem(
-        "nq_marks"
-      ) || "[]"
-    );
-
-  }catch(e){
-
-    return [];
-
-  }
-
-}
-
-
-function saveBookmarks(list){
-
-  localStorage.setItem(
-    "nq_marks",
-    JSON.stringify(list)
-  );
-
-}
-
-
-function renderBookmarks(){
-
-  const marks =
-    getBookmarks();
-
-
-  const list =
-    novels.filter(
-      n =>
-        marks.includes(
-          Number(n.id)
-        )
-    );
-
-
-  document.getElementById(
-    "bookmarkList"
-  ).innerHTML =
-
-    list.length
-
-      ? list
-          .map(card)
-          .join("")
-
-      : `
-
-        <div class="empty">
-
-          Belum ada bookmark.
-
-        </div>
-
-      `;
-
-}
-
-
-/* =========================================================
-   TOGGLE BOOKMARK
-========================================================= */
-
-function toggleMark(id){
-
-  id = Number(id);
-
-
-  let marks =
-    getBookmarks();
-
-
-  if(
-    marks.includes(id)
-  ){
-
-    marks =
-      marks.filter(
-        x =>
-          Number(x) !== id
-      );
-
-  }else{
-
-    marks.push(id);
-
-  }
-
-
-  saveBookmarks(marks);
-
-
-  detail(id);
-
-}
-
-
-/* =========================================================
-   DETAIL NOVEL
-========================================================= */
-
-async function detail(id){
-
-  id = Number(id);
-
-
-  const n =
-    novels.find(
-      x =>
-        Number(x.id) === id
-    );
-
-
-  if(!n){
-
-    return;
-
-  }
-
-
-  document.getElementById(
-    "detailBox"
-  ).innerHTML = `
-
-    <div class="back">
-
-      <button
-        class="btn"
-        onclick="go('catalog')"
-      >
-
-        ← Kembali
-
-      </button>
-
-    </div>
-
-
-    <div class="detail">
-
-      ${coverHTML(n)}
-
-
-      <h1>
-
-        ${esc(
-          n.title ||
-          "Tanpa judul"
-        )}
-
-      </h1>
-
-
-      <div class="meta">
-
-        ${esc(
-          n.genre ||
-          "Umum"
-        )}
-
-        · ⭐
-        ${n.rating ?? "0"}
-
-        · 👁
-        ${Number(
-          n.views || 0
-        ).toLocaleString("id-ID")}
-
-      </div>
-
-
-      <p>
-
-        ${esc(
-          n.description ||
-          n.desc ||
-          "Belum ada deskripsi novel."
-        )}
-
-      </p>
-
-
-      <button
-        id="bookmarkButton"
-        class="btn"
-        onclick="toggleMark(${id})"
-      >
-
-        ${
-          getBookmarks()
-            .includes(id)
-
-          ? "★ Hapus Bookmark"
-
-          : "☆ Bookmark"
-        }
-
-      </button>
-
-
-      <div class="sectionhead">
-
-        <h2>
-          Daftar Bab
-        </h2>
-
-        <span
-          id="chapterCount"
-          class="status"
-        >
-          Memuat...
-        </span>
-
-      </div>
-
-
-      <div id="chapterList">
-
-        <div class="empty">
-
-          Memuat daftar bab...
-
-        </div>
-
-      </div>
-
-    </div>
-
-  `;
-
-
-  go("detail");
-
-
-  try{
-
-    const list =
-      await loadChapters(id);
-
-
-    const chapterList =
-      document.getElementById(
-        "chapterList"
-      );
-
-
-    const chapterCount =
-      document.getElementById(
-        "chapterCount"
-      );
-
-
-    if(
-      !list ||
-      list.length === 0
-    ){
-
-      chapterCount.textContent =
-        "0 bab";
-
-
-      chapterList.innerHTML = `
-
-        <div class="empty">
-
-          Belum ada bab
-          untuk novel ini.
-
-          <br><br>
-
-          Pastikan nilai
-          <b>novel_id</b>
-          di tabel
-          <b>chapters</b>
-          sama dengan ID novel.
-
-        </div>
-
-      `;
-
-
-      return;
-
+      return await response.json();
     }
 
+    // UTILS
+    function esc(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
 
-    chapterCount.textContent =
-      list.length +
-      " bab";
-
-
-    chapterList.innerHTML =
-      list
-        .map(
-          ch => `
-
-            <div
-              class="chapter"
-              onclick="
-                readChapter(
-                  ${id},
-                  ${Number(ch.id)}
-                )
-              "
-            >
-
-              <span class="chapter-title">
-
-                ${esc(
-                  ch.title ||
-                  "Bab " +
-                  ch.chapter_number
-                )}
-
-              </span>
-
-
-              <span>
-                ›
-              </span>
-
-            </div>
-
-          `
-        )
+    function formatChapter(text) {
+      return String(text)
+        .split(/\n\s*\n/)
+        .map(p => {
+          if (!p.trim()) return "";
+          return `<p>${esc(p).replace(/\n/g, "<br>")}</p>`;
+        })
         .join("");
-
-
-  }catch(error){
-
-    console.error(error);
-
-
-    const chapterList =
-      document.getElementById(
-        "chapterList"
-      );
-
-
-    if(chapterList){
-
-      chapterList.innerHTML = `
-
-        <div class="error">
-
-          <b>
-            Gagal mengambil daftar bab.
-          </b>
-
-          <br><br>
-
-          ${esc(
-            error.message
-          )}
-
-        </div>
-
-      `;
-
     }
 
-  }
-
-}
-
-
-/* =========================================================
-   READ CHAPTER
-========================================================= */
-
-async function readChapter(
-  novelId,
-  chapterId
-){
-
-  novelId =
-    Number(novelId);
-
-  chapterId =
-    Number(chapterId);
-
-
-  const n =
-    novels.find(
-      x =>
-        Number(x.id) ===
-        novelId
-    );
-
-
-  if(!n){
-
-    return;
-
-  }
-
-
-  const readerBox =
-    document.getElementById(
-      "readerBox"
-    );
-
-
-  readerBox.innerHTML = `
-
-    <div class="readerbar">
-
-      <button
-        onclick="
-          detail(${novelId})
-        "
-      >
-
-        ← Daftar Bab
-
-      </button>
-
-
-      <span>
-        Memuat...
-      </span>
-
-
-      <div>
-
-        <button
-          onclick="font(-1)"
-        >
-          A−
-        </button>
-
-
-        <button
-          onclick="font(1)"
-        >
-          A+
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <article
-      class="reader"
-      id="article"
-    >
-
-      <h1>
-
-        ${esc(
-          n.title
-        )}
-
-      </h1>
-
-
-      <div class="loading">
-
-        Memuat isi bab...
-
-      </div>
-
-    </article>
-
-  `;
-
-
-  go("reader");
-
-
-  try{
-
-    const result =
-      await supabaseFetch(
-        "chapters",
-        "select=id,chapter_number,novel_id,title,content,views" +
-        "&id=eq." +
-        encodeURIComponent(
-          chapterId
-        )
-      );
-
-
-    console.log(
-      "Chapter dibuka:",
-      result
-    );
-
-
-    if(
-      !result ||
-      result.length === 0
-    ){
-
-      document.getElementById(
-        "article"
-      ).innerHTML = `
-
-        <div class="empty">
-
-          Bab tidak ditemukan.
-
-        </div>
-
-      `;
-
-
-      return;
-
+    // NAVIGASI VIEW
+    function go(viewName) {
+      document.querySelectorAll(".view-section").forEach(el => el.classList.remove("active"));
+      if (viewName === "home") {
+        document.getElementById("homeView").classList.add("active");
+      } else if (viewName === "bookmarks") {
+        renderBookmarks();
+        document.getElementById("bookmarksView").classList.add("active");
+      } else if (viewName === "detail") {
+        document.getElementById("detailView").classList.add("active");
+      } else if (viewName === "reader") {
+        document.getElementById("readerView").classList.add("active");
+      }
     }
 
-
-    const ch =
-      result[0];
-
-
-    const title =
-      ch.title ||
-      "Bab " +
-      ch.chapter_number;
-
-
-    const content =
-      ch.content ||
-      "";
-
-
-    const bar =
-      document
-        .getElementById(
-          "readerBox"
-        )
-        .querySelector(
-          ".readerbar span"
-        );
-
-
-    if(bar){
-
-      bar.textContent =
-        title;
-
+    // LOAD NOVELS
+    async function loadNovels() {
+      try {
+        novels = await supabaseFetch("novels", "select=*");
+        populateGenres();
+        renderNovels(novels);
+      } catch (err) {
+        document.getElementById("novelGrid").innerHTML = `
+          <div class="error">Gagal memuat novel. Pastikan API Key Supabase sudah benar.</div>
+        `;
+        console.error(err);
+      }
     }
 
+    function populateGenres() {
+      const genres = new Set();
+      novels.forEach(n => {
+        if (n.genre) genres.add(n.genre);
+      });
+      const select = document.getElementById("genreSelect");
+      select.innerHTML = `<option value="">Semua Genre</option>`;
+      genres.forEach(g => {
+        select.innerHTML += `<option value="${esc(g)}">${esc(g)}</option>`;
+      });
+    }
 
-    document.getElementById(
-      "article"
-    ).innerHTML = `
+    function handleFilter() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      const genre = document.getElementById("genreSelect").value;
 
-      <h1>
+      const filtered = novels.filter(n => {
+        const matchTitle = (n.title || "").toLowerCase().includes(query);
+        const matchGenre = genre ? n.genre === genre : true;
+        return matchTitle && matchGenre;
+      });
 
-        ${esc(
-          n.title
-        )}
+      renderNovels(filtered);
+    }
 
-      </h1>
-
-
-      <h2>
-
-        ${esc(
-          title
-        )}
-
-      </h2>
-
-
-      ${
-        content.trim()
-
-          ? formatChapter(
-              content
-            )
-
-          : `
-
-            <p>
-              Isi bab belum tersedia.
-            </p>
-
-          `
+    function renderNovels(list) {
+      const container = document.getElementById("novelGrid");
+      if (!list.length) {
+        container.innerHTML = `<div class="empty">Tidak ada novel ditemukan.</div>`;
+        return;
       }
 
-    `;
+      container.innerHTML = list.map(n => `
+        <div class="novel-card" onclick="detail(${n.id})">
+          <img class="novel-cover" src="${esc(n.cover_url || 'https://via.placeholder.com/150x200?text=No+Cover')}" alt="${esc(n.title)}">
+          <div class="novel-info">
+            <div class="novel-title">${esc(n.title)}</div>
+            <div class="novel-meta">
+              <span>⭐ ${n.rating || '0'}</span>
+              <span>👁️ ${n.views || '0'}</span>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
 
+    // LOAD CHAPTERS (Menggunakan 'chapters')
+    async function loadChapters(novelId) {
+      try {
+        const chapters = await supabaseFetch(
+          "chapters",
+          "select=*&novel_id=eq." + encodeURIComponent(Number(novelId)) + "&order=chapter_number.asc"
+        );
+        console.log("CHAPTERS:", chapters);
+        return chapters;
+      } catch (error) {
+        console.error("Gagal mengambil chapters:", error);
+        throw error;
+      }
+    }
 
-  }catch(error){
+    // DETAIL NOVEL
+    async function detail(novelId) {
+      const n = novels.find(x => Number(x.id) === Number(novelId));
+      if (!n) return;
 
-    console.error(error);
+      const isBookmarked = bookmarks.includes(Number(novelId));
 
+      document.getElementById("detailBox").innerHTML = `
+        <div class="detail-card">
+          <img class="detail-cover" src="${esc(n.cover_url || 'https://via.placeholder.com/150x200?text=No+Cover')}" alt="${esc(n.title)}">
+          <div class="detail-content">
+            <h1 class="detail-title">${esc(n.title)}</h1>
+            <div class="novel-meta" style="justify-content: flex-start; gap: 16px;">
+              <span>Genre: <b>${esc(n.genre || '-')}</b></span>
+              <span>⭐ <b>${n.rating || '0'}</b></span>
+              <span>👁️ <b>${n.views || '0'}</b></span>
+            </div>
+            <div class="detail-desc">${esc(n.description || 'Tidak ada deskripsi.')}</div>
+            <div class="action-row">
+              <button class="btn ${isBookmarked ? '' : 'btn-primary'}" onclick="toggleBookmark(${n.id})">
+                ${isBookmarked ? 'Hapus Bookmark' : '+ Simpan Bookmark'}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
 
-    document.getElementById(
-      "article"
-    ).innerHTML = `
+      document.getElementById("chapterListBox").innerHTML = `<div class="loading">Memuat bab...</div>`;
+      go("detail");
 
-      <div class="error">
+      try {
+        const chapterList = await loadChapters(novelId);
 
-        <b>
-          Gagal mengambil isi bab.
-        </b>
-
-        <br><br>
-
-        ${esc(
-          error.message
-        )}
-
-      </div>
-
-    `;
-
-  }
-
-}
-
-
-/* =========================================================
-   FORMAT CHAPTER
-========================================================= */
-
-function formatChapter(
-  text
-){
-
-  return String(text)
-    .split(
-      /\n\s*\n/
-    )
-    .map(
-      p => {
-
-        if(!p.trim()){
-
-          return "";
-
+        if (!chapterList || chapterList.length === 0) {
+          document.getElementById("chapterListBox").innerHTML = `<div class="empty">Daftar Bab = 0 bab</div>`;
+          return;
         }
 
+        document.getElementById("chapterListBox").innerHTML = chapterList.map(ch => `
+          <div class="chapter-item" onclick="readChapter(${Number(novelId)}, ${Number(ch.id)})">
+            <span>${esc(ch.title || 'Bab ' + ch.chapter_number)}</span>
+            <span>&gt;</span>
+          </div>
+        `).join("");
 
-        return `
+      } catch (err) {
+        document.getElementById("chapterListBox").innerHTML = `
+          <div class="error">Gagal memuat daftar bab.</div>
+        `;
+      }
+    }
 
-          <p>
+    // BACA CHAPTER (Menggunakan 'chapters')
+    async function readChapter(novelId, chapterId) {
+      const n = novels.find(x => Number(x.id) === Number(novelId));
+      if (!n) return;
 
-            ${esc(p)
-              .replace(
-                /\n/g,
-                "<br>"
-              )}
+      const readerBox = document.getElementById("readerBox");
 
-          </p>
+      readerBox.innerHTML = `
+        <div class="readerbar">
+          <button class="btn" onclick="detail(${Number(novelId)})">← Daftar Bab</button>
+          <span>Memuat...</span>
+          <div>
+            <button class="btn" onclick="font(-1)">A−</button>
+            <button class="btn" onclick="font(1)">A+</button>
+          </div>
+        </div>
 
+        <article class="reader" id="article" style="font-size: ${currentFontSize}px;">
+          <h1>${esc(n.title)}</h1>
+          <div class="loading">Memuat isi bab...</div>
+        </article>
+      `;
+
+      go("reader");
+
+      try {
+        const result = await supabaseFetch(
+          "chapters",
+          "select=*&id=eq." + encodeURIComponent(Number(chapterId))
+        );
+
+        if (!result.length) {
+          document.getElementById("article").innerHTML = `<div class="empty">Bab tidak ditemukan.</div>`;
+          return;
+        }
+
+        const ch = result[0];
+        const title = ch.title || ("Bab " + ch.chapter_number);
+        const content = ch.content || "";
+
+        document.querySelector("#readerBox .readerbar span").textContent = title;
+
+        document.getElementById("article").innerHTML = `
+          <h1>${esc(n.title)}</h1>
+          <h2>${esc(title)}</h2>
+          ${content ? formatChapter(content) : `<p>Isi bab belum tersedia.</p>`}
         `;
 
+      } catch (error) {
+        document.getElementById("article").innerHTML = `
+          <div class="error">
+            <b>Gagal mengambil isi bab.</b><br><br>
+            ${esc(error.message)}
+          </div>
+        `;
       }
-    )
-    .join("");
+    }
 
-}
+    // UKURAN FONT READER
+    function font(delta) {
+      currentFontSize = Math.min(Math.max(12, currentFontSize + (delta * 2)), 32);
+      const article = document.getElementById("article");
+      if (article) {
+        article.style.fontSize = currentFontSize + "px";
+      }
+    }
 
+    // BOOKMARKS LOGIC
+    function toggleBookmark(novelId) {
+      const id = Number(novelId);
+      const index = bookmarks.indexOf(id);
+      if (index > -1) {
+        bookmarks.splice(index, 1);
+      } else {
+        bookmarks.push(id);
+      }
+      localStorage.setItem("nq_bookmarks", JSON.stringify(bookmarks));
+      detail(id);
+    }
 
-/* =========================================================
-   FONT READER
-========================================================= */
+    function renderBookmarks() {
+      const container = document.getElementById("bookmarkGrid");
+      const bookmarkedNovels = novels.filter(n => bookmarks.includes(Number(n.id)));
 
-function font(x){
+      if (!bookmarkedNovels.length) {
+        container.innerHTML = `<div class="empty">Belum ada novel yang di-bookmark.</div>`;
+        return;
+      }
 
-  const r =
-    document.querySelector(
-      ".reader"
-    );
+      container.innerHTML = bookmarkedNovels.map(n => `
+        <div class="novel-card" onclick="detail(${n.id})">
+          <img class="novel-cover" src="${esc(n.cover_url || 'https://via.placeholder.com/150x200?text=No+Cover')}" alt="${esc(n.title)}">
+          <div class="novel-info">
+            <div class="novel-title">${esc(n.title)}</div>
+            <div class="novel-meta">
+              <span>⭐ ${n.rating || '0'}</span>
+              <span>👁️ ${n.views || '0'}</span>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
 
-
-  if(!r){
-
-    return;
-
-  }
-
-
-  const size =
-    parseFloat(
-      getComputedStyle(r)
-        .fontSize
-    );
-
-
-  r.style.fontSize =
-    Math.max(
-      14,
-      Math.min(
-        30,
-        size + x
-      )
-    ) + "px";
-
-}
-
-
-/* =========================================================
-   START
-========================================================= */
-
-loadNovels();
-
-</script>
-
+    // INISIALISASI
+    window.addEventListener("DOMContentLoaded", () => {
+      loadNovels();
+    });
+  </script>
 </body>
 </html>
