@@ -331,8 +331,8 @@
 
   <script>
     // KONFIGURASI SUPABASE
-    const SUPABASE_URL = "https://mcqaljrpbvwjzvzhkigk.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1jcWFsanJwYnZ3anp2emhraWdrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxOTA1ODcsImV4cCI6MjA1NTc2NjU4N30.Zz12G59W-_p-fC28gT27L3gBq-R2N6C9K8m5X";
+    const SUPABASE_URL = "https://mcqaljrpbvwjzvzhkigk.supabase.co/rest/v1/";
+    const SUPABASE_KEY = "sb_publishable_Y3sTZvucMvEXdV9GdwQtGw_CI0t0b2u";
 
     // STATE LOKAL
     let novels = [];
