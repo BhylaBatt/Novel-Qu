@@ -331,7 +331,7 @@
 
   <script>
     // KONFIGURASI SUPABASE
-    const SUPABASE_URL = "https://mcqaljrpbvwjzvzhkigk.supabase.co/rest/v1/";
+    const SUPABASE_URL = "https://mcqaljrpbvwjzvzhkigk.supabase.co";
     const SUPABASE_KEY = "sb_publishable_Y3sTZvucMvEXdV9GdwQtGw_CI0t0b2u";
 
     // STATE LOKAL
